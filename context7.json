@@ -2,5 +2,7 @@
   "$schema": "https://context7.com/schema/context7.json",
   "projectTitle": "Orvanta CLI",
   "description": "CLI reference, agent guidance (AGENTS.md), and per-task skills for the Orvanta CLI (@orvanta/cli) — scripts, flows, triggers, schedules, resources, and apps.",
-  "branch": "main"
+  "branch": "main",
+  "url": "https://context7.com/orvanta-cloud/orvanta-cli-docs",
+  "public_key": "pk_ff1ZuG1XVdsiECw2GUPwn"
 }
