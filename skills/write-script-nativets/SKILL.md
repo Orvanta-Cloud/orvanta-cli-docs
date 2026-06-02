@@ -479,7 +479,7 @@ async usernameToEmail(username: string): Promise<string>
  * Sends an interactive approval request via Slack, allowing optional customization of the message, approver, and form fields.
  * 
  * **[Enterprise Edition Only]** To include form fields in the Slack approval request, go to **Advanced -> Suspend -> Form**
- * and define a form. Learn more at [Orvanta Documentation](https://www.orvanta.ai/docs/flows/flow_approval#form).
+ * and define a form. Learn more at [Orvanta Documentation](https://docs.orvanta.cloud/flows/flow-approval/#form).
  * 
  * @param {Object} options - The configuration options for the Slack approval request.
  * @param {string} options.slackResourcePath - The path to the Slack resource in Orvanta.
@@ -518,7 +518,7 @@ async requestInteractiveSlackApproval({ slackResourcePath, channelId, message, a
  * Sends an interactive approval request via Teams, allowing optional customization of the message, approver, and form fields.
  * 
  * **[Enterprise Edition Only]** To include form fields in the Teams approval request, go to **Advanced -> Suspend -> Form**
- * and define a form. Learn more at [Orvanta Documentation](https://www.orvanta.ai/docs/flows/flow_approval#form).
+ * and define a form. Learn more at [Orvanta Documentation](https://docs.orvanta.cloud/flows/flow-approval/#form).
  * 
  * @param {Object} options - The configuration options for the Teams approval request.
  * @param {string} options.teamName - The Teams team name where the approval request will be sent.

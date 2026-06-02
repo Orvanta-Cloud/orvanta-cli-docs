@@ -577,7 +577,7 @@ def get_resume_urls(approver: str = None, flow_level: bool = None) -> dict
 # Sends an interactive approval request via Slack, allowing optional customization of the message, approver, and form fields.
 # 
 # **[Enterprise Edition Only]** To include form fields in the Slack approval request, use the "Advanced -> Suspend -> Form" functionality.
-# Learn more at: https://www.orvanta.ai/docs/flows/flow_approval#form
+# Learn more at: https://docs.orvanta.cloud/flows/flow-approval/#form
 # 
 # :param slack_resource_path: The path to the Slack resource in Orvanta.
 # :type slack_resource_path: str
