@@ -42,6 +42,10 @@ You MUST use the `preview` skill any time the user wants to see/open/visualize/p
 
 You MUST use the `cli-commands` skill to use the CLI.
 
+## Interactive Shell
+
+Running `orvanta` with no arguments in a real terminal opens a full-screen interactive shell instead of doing nothing. Never invoke bare `orvanta` yourself when a real TTY might be attached — it will open the shell and block waiting for keystrokes instead of returning. Always run a subcommand. To enumerate commands programmatically, use `orvanta commands --json` instead. See the `cli-commands` skill for the full picture (invocation, meta-commands, keybindings).
+
 ## Debugging Jobs
 
 When the user reports a script or flow failure, is investigating unexpected output, or asks why something ran the way it did, use the CLI to fetch job details before speculating. See the `cli-commands` skill for all flags.
@@ -85,5 +89,5 @@ For specific guidance, ALWAYS use the skills listed below.
 - `.claude/skills/schedules/SKILL.md` - MUST use when configuring schedules.
 - `.claude/skills/resources/SKILL.md` - MUST use when managing resources.
 - `.claude/skills/write-workflow-as-code/SKILL.md` - MUST use when writing or modifying Orvanta Workflow-as-Code scripts using workflow, task, step, sleep, approvals, taskScript, taskFlow, task_script, or task_flow.
-- `.claude/skills/cli-commands/SKILL.md` - MUST use when using the CLI, including debugging job failures and inspecting run history via `orvanta job`.
+- `.claude/skills/cli-commands/SKILL.md` - MUST use when using the CLI, including debugging job failures, inspecting run history via `orvanta job`, and understanding the interactive shell a bare `orvanta` invocation opens.
 - `.claude/skills/preview/SKILL.md` - MUST use when opening the Orvanta dev page / visual preview of a flow, script, or app. Triggers on words like preview, open, navigate to, visualize, see the flow/app/script, and after writing a flow/script/app for visual verification.

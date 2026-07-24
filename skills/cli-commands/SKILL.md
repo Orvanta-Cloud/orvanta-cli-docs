@@ -1,7 +1,76 @@
 ---
 name: cli-commands
-description: MUST use when using the CLI, including debugging job failures and inspecting run history via `orvanta job`.
+description: MUST use when using the CLI, including debugging job failures, inspecting run history via `orvanta job`, and understanding the interactive shell a bare `orvanta` invocation opens.
 ---
+
+## Interactive Shell
+
+### What it is
+
+Running `orvanta` with **no arguments**, in a real terminal, opens a
+full-screen interactive shell: a scrollable command console with a fuzzy
+command palette, a persistent input line, and role-aware command discovery.
+It is the CLI's own UI, not a wrapper around the web app.
+
+The shell only opens when **all** of these are true:
+
+- no arguments were passed (`orvanta` alone — any subcommand, flag, or piped
+  input skips it and runs one-shot as usual)
+- both stdout and stdin are a real TTY
+
+Any other invocation — `orvanta job list`, `orvanta --help`, `orvanta | cat`,
+a non-interactive shell, CI — runs the normal one-shot command instead. There
+is no separate flag to force or suppress it; the bare-TTY check is the only
+gate.
+
+### As an agent, avoid triggering it
+
+**Never invoke bare `orvanta` with no arguments when you don't control
+whether stdin/stdout are a TTY.** If your tool call runs inside a real
+interactive terminal, a bare `orvanta` opens the full-screen shell and blocks
+waiting for interactive keystrokes — it will not return control to you.
+Always pass a subcommand (`orvanta workspace list`, `orvanta job get <id>`,
+etc.); one-shot invocations never load the shell at all, regardless of TTY
+state. When you need to enumerate commands programmatically, use
+`orvanta commands --json` (below), not the shell.
+
+### Discovering commands without opening the shell
+
+```bash
+orvanta commands              # every command, grouped, with descriptions
+orvanta commands flow         # filter by a substring of the name/description
+orvanta commands --flat       # one command per line, no grouping
+orvanta commands --json       # machine-readable — pipe to jq
+orvanta commands --role operator   # only commands that role can run
+```
+
+`--json` emits a stable array of `{command, path, args, description,
+minRole}` — this is the piping-safe path for scripting against the command
+surface (e.g. building a menu, validating a command exists before running
+it) instead of parsing shell/help output.
+
+### What the shell offers (for when a user is driving it themselves)
+
+- **Type to search** — typing fuzzy-matches against every registered
+  command; `Tab`/`Shift+Tab` cycle matches into the input line, `Enter` runs
+  the literal typed text (never the highlighted suggestion).
+- **`Tab` on an empty line** browses the entire command surface.
+- **Meta-commands**: `/help`, `/commands` (print every command into the
+  pane), `/workspace` (switch the active workspace), `/clear`, `/exit`
+  (or `/quit`).
+- **Keys**: `↑`/`↓` step through command history (or move the palette
+  selection while it's open); `PageUp`/`PageDown` scroll the output pane;
+  `Ctrl+Q` quits; `Ctrl+W` switches workspace; `Ctrl+C`/`Ctrl+U` clear the
+  input line; `?` on an empty line shows a keybinding summary.
+- **Role-gated commands** — entries the current user's role (admin /
+  developer / operator, from `whoami`) can't run are dimmed with a lock
+  glyph in the palette and `/commands` listing, not hidden. This is
+  discoverability only: the server is the actual enforcement point, so a
+  dimmed command is a UX hint, not a security boundary.
+
+There is no way to script the interactive shell itself — it is a
+human-facing surface. Automate against the one-shot commands and
+`orvanta commands --json` instead.
 
 # Orvanta CLI Commands
 
@@ -59,6 +128,17 @@ View audit logs (requires admin)
 - `audit list` - List audit log entries
 - `audit get <id:string>` - Get a specific audit log entry
   - `--json` - Output as JSON (for piping to jq)
+
+### commands
+
+List every available command
+
+**Arguments:** `[filter:string]`
+
+**Options:**
+- `--json` - Output as JSON (for piping to jq)
+- `--flat` - List commands one per line without grouping
+- `--role <role:string>` - Only show commands runnable by a role: admin, developer, or operator
 
 ### config
 

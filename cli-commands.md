@@ -55,6 +55,17 @@ View audit logs (requires admin)
 - `audit get <id:string>` - Get a specific audit log entry
   - `--json` - Output as JSON (for piping to jq)
 
+### commands
+
+List every available command
+
+**Arguments:** `[filter:string]`
+
+**Options:**
+- `--json` - Output as JSON (for piping to jq)
+- `--flat` - List commands one per line without grouping
+- `--role <role:string>` - Only show commands runnable by a role: admin, developer, or operator
+
 ### config
 
 Show all available orvanta.yaml configuration options
