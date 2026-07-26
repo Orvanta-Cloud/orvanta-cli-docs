@@ -1,7 +1,7 @@
 # Orvanta CLI Quickstart
 
 `orvanta` is the official command line interface for
-[Orvanta](https://docs.orvanta.cloud) — a visual-first polyglot automation
+[Orvanta](https://docs.orvanta.cloud), a visual-first polyglot automation
 platform for scripts, flows, triggers, schedules, resources, and apps. Use it
 to authenticate against a workspace, scaffold local projects, sync
 scripts/flows/apps between your filesystem and a workspace, and run or debug
@@ -22,7 +22,7 @@ Upgrade later with `orvanta upgrade`.
 orvanta workspace add
 ```
 
-This walks you through adding a workspace profile — a `(name, remote URL,
+This walks you through adding a workspace profile: a `(name, remote URL,
 workspace id, token)` tuple stored under your Orvanta config directory
 (default `~/.config`, override with `OV_CONFIG_DIR`). You can have multiple
 profiles and switch between them with `orvanta workspace switch <name>`.
@@ -40,8 +40,8 @@ orvanta init
 `orvanta init` creates:
 
 - a sync configuration file (which folders/types to track).
-- `AGENTS.md` + `CLAUDE.md` — the agent prompt published in this repo.
-- `.claude/skills/` — per-task guides used by AI coding assistants (Claude
+- `AGENTS.md` + `CLAUDE.md`: the agent prompt published in this repo.
+- `.claude/skills/`: per-task guides used by AI coding assistants (Claude
   Code, Codex, Pi). These are the same `SKILL.md` files you'll find under
   `skills/` in this repo.
 
@@ -86,7 +86,7 @@ orvanta app    new u/me/path --summary "..." --framework svelte
 ```
 
 These create the correct folder layout and a minimal spec file. Prefer them
-over hand-creating the folders — they pick the right naming conventions for
+over hand-creating the folders. They pick the right naming conventions for
 your workspace.
 
 ## Triggers and schedules
@@ -105,12 +105,12 @@ source (orvanta completions fish | psub)  # fish
 
 ## Reference
 
-- `cli-commands.md` — every `orvanta` command and flag, generated from the
+- `cli-commands.md`: every `orvanta` command and flag, generated from the
   source.
-- `AGENTS.md` — the top-level prompt the CLI installs into each project (and
+- `AGENTS.md`: the top-level prompt the CLI installs into each project (and
   the same instructions AI coding assistants follow when working in an
   Orvanta repo).
-- `skills/<name>/SKILL.md` — one self-contained guide per common task.
+- `skills/<name>/SKILL.md`: one self-contained guide per common task.
 
 ### Skills index
 
@@ -150,5 +150,5 @@ command reference, published for ingestion by docs aggregators such as
 [context7](https://context7.com).
 
 **Do not edit by hand.** This repo is regenerated from the Orvanta platform on
-every release — edits here are overwritten. For documentation, issues, and
+every release, so edits here are overwritten. For documentation, issues, and
 support, see [https://docs.orvanta.cloud](https://docs.orvanta.cloud).

@@ -5,7 +5,7 @@ description: MUST use when opening the Orvanta dev page / visual preview of a fl
 
 # Orvanta Preview Workflow
 
-Use this skill any time the user wants to **see**, **open**, **navigate to**, **visualize**, or **preview** a flow, script, or app — and any time you've just finished writing one and want to offer visual verification.
+Use this skill any time the user wants to **see**, **open**, **navigate to**, **visualize**, or **preview** a flow, script, or app. It also applies any time you've just finished writing one and want to offer visual verification.
 
 The Orvanta dev page renders the flow graph / script editor, lets the user step through steps, and live-reloads on every save. It runs locally via `orvanta dev` and is reached on a localhost port.
 
@@ -23,7 +23,7 @@ Default to **direct** unless you have a specific embedder that needs localhost.
 ### 2. Who starts the server?
 
 - **You start it** in the background. Spawn `orvanta dev …` (or `orvanta app dev …`) yourself, capture the URL it prints, do whatever's next (open a tab, hand the URL to an embedder).
-- **The runtime starts it from `.claude/launch.json`.** Some runtimes (currently the Claude Desktop / Claude Code MCP preview integration — tools prefixed with `mcp__Claude_Preview__`) can read a `launch.json` configuration and launch the dev server on demand when you invoke their preview tool. **Only take this path if you actually have such a tool** — otherwise nothing reads the file and `orvanta dev` never starts.
+- **The runtime starts it from `.claude/launch.json`.** Some runtimes (currently the Claude Desktop / Claude Code MCP preview integration, tools prefixed with `mcp__Claude_Preview__`) can read a `launch.json` configuration and launch the dev server on demand when you invoke their preview tool. **Only take this path if you actually have such a tool** — otherwise nothing reads the file and `orvanta dev` never starts.
 
 The two decisions compose. The common cases:
 
@@ -34,7 +34,7 @@ The two decisions compose. The common cases:
 | IDE / chat preview pane that only accepts localhost | Yes | No | Proxy mode, you start it, point the embedder at `http://localhost:<port>/` |
 | Claude Desktop / Code MCP preview | Yes | Yes | Proxy mode, write a `launch.json` entry, invoke the MCP tool |
 
-Never start the proxy "just in case" — it adds the localhost hop for no benefit when no embedder needs it.
+Never start the proxy "just in case". It adds the localhost hop for no benefit when no embedder needs it.
 
 ## Starting the server yourself
 
@@ -57,12 +57,12 @@ cd <app_path>__raw_app && orvanta app dev --no-open --port 4000
 Each command prints the URL on stdout. Line shapes differ:
 
 - `orvanta dev --no-open` (direct) prints `Go to <url>` with the full remote URL (workspace, token, path baked in).
-- `orvanta dev --proxy-port` prints `Dev proxy listening on http://localhost:<port>` — the URL to hand to an embedder is `http://localhost:<port>/`.
-- `orvanta app dev --no-open` prints `🚀 Dev server running at <url>` — the local app server.
+- `orvanta dev --proxy-port` prints `Dev proxy listening on http://localhost:<port>`. The URL to hand to an embedder is `http://localhost:<port>/`.
+- `orvanta app dev --no-open` prints `🚀 Dev server running at <url>` (the local app server).
 
-Capture the URL with a loose match (the first `https?://…` token after startup) and either hand it to your embedder or relay it to the user: *"Preview is running — open `<url>` in your browser."* Don't construct the URL yourself; you don't have the workspace ID or auth token.
+Capture the URL with a loose match (the first `https?://…` token after startup) and either hand it to your embedder or relay it to the user: *"Preview is running. Open `<url>` in your browser."* Don't construct the URL yourself; you don't have the workspace ID or auth token.
 
-These commands are long-running — start them in the background, don't block waiting.
+These commands are long-running, so start them in the background and don't block waiting.
 
 ## Letting `launch.json` start the server (Claude Desktop / Code MCP only)
 
@@ -70,7 +70,7 @@ Take this path when **and only when** an `mcp__Claude_Preview__*` MCP tool is ex
 
 **Each flow / script / app gets its own named entry** in the user's `.claude/launch.json` so multiple previews coexist without colliding — each entry pins a different port + path. Never reuse a generic "orvanta" entry for different targets.
 
-### Step 1 — Reuse or add a per-target entry in `.claude/launch.json`
+### Step 1: Reuse or add a per-target entry in `.claude/launch.json`
 
 Convention: name the entry `orvanta: <orvanta_path>` (e.g. `orvanta: f/test/my_flow`).
 
@@ -101,9 +101,9 @@ For apps (`*__raw_app/`), `orvanta app dev` is the equivalent — runs from the 
 
 If `.claude/launch.json` doesn't exist yet, create it with the standard shell `{ "version": "0.0.1", "configurations": [...] }`.
 
-### Step 2 — Invoke the MCP preview tool
+### Step 2: Invoke the MCP preview tool
 
-Point it at the entry you just added/found. Use `http://localhost:<port>/` as the URL — the proxy's redirect at `/` is what appends the workspace ID, the auth token, and the path. Do **NOT** construct a `/dev?...` URL yourself.
+Point it at the entry you just added/found. Use `http://localhost:<port>/` as the URL. The proxy's redirect at `/` is what appends the workspace ID, the auth token, and the path. Do **NOT** construct a `/dev?...` URL yourself.
 
 The MCP tool launches the configuration on demand, so you don't need to start the `orvanta dev` process manually.
 
@@ -118,9 +118,9 @@ Both print the job result, are safe to run yourself, and don't deploy.
 ## Anti-patterns to avoid
 
 - ❌ Writing a `.claude/launch.json` entry when no `mcp__Claude_Preview__*` tool is in your tool list. Nothing will read the file; the server never starts. Spawn `orvanta dev` yourself instead.
-- ❌ Starting the proxy when no embedder needs a localhost URL. Direct mode is the right choice — the proxy is overhead with no purpose.
-- ❌ Reusing a single generic `launch.json` entry for every preview target. Each flow/script/app gets its own named entry on its own port — that's how multiple sessions coexist without one preview clobbering another.
+- ❌ Starting the proxy when no embedder needs a localhost URL. Direct mode is the right choice; the proxy is overhead with no purpose.
+- ❌ Reusing a single generic `launch.json` entry for every preview target. Each flow/script/app gets its own named entry on its own port. That's how multiple sessions coexist without one preview clobbering another.
 - ❌ Mutating an existing entry's `--path` to retarget it. Add a new entry instead.
 - ❌ Constructing `http://localhost:<port>/dev?path=<X>` yourself. The proxy's `/` redirect is what appends the workspace ID and auth token; bypassing it gives a broken page. Always use `http://localhost:<port>/`.
 - ❌ Starting `orvanta dev` in the foreground (you'll hang). Always background.
-- ❌ Listing both "open in IDE pane" and "open in browser" as a menu — pick one based on context.
+- ❌ Listing both "open in IDE pane" and "open in browser" as a menu. Pick one based on context.

@@ -77,6 +77,40 @@ Show all available orvanta.yaml configuration options
 
 - `config migrate` - Migrate orvanta.yaml from gitBranches/environments to workspaces format
 
+### connection
+
+connection related commands
+
+**Options:**
+- `--json` - Output as JSON (for piping to jq)
+
+**Subcommands:**
+
+- `connection list` - list all connections
+  - `--json` - Output as JSON (for piping to jq)
+- `connection get <path:string>` - get a connection's details
+  - `--json` - Output as JSON (for piping to jq)
+- `connection new <path:string>` - create a new connection locally
+- `connection push <file_path:string> <remote_path:string>` - push a local connection spec. This overrides any remote versions.
+
+### connection-type
+
+connection type related commands
+
+**Options:**
+- `--json` - Output as JSON (for piping to jq)
+
+**Subcommands:**
+
+- `connection-type list` - list all connection types
+  - `--schema` - Show schema in the output
+  - `--json` - Output as JSON (for piping to jq)
+- `connection-type get <path:string>` - get a connection type's details
+  - `--json` - Output as JSON (for piping to jq)
+- `connection-type new <name:string>` - create a new connection type locally
+- `connection-type push <file_path:string> <name:string>` - push a local connection type spec. This overrides any remote versions.
+- `connection-type generate-namespace` - Create a TypeScript definition file with the RT namespace generated from the connection types
+
 ### dependencies
 
 workspace dependencies related commands
@@ -351,40 +385,6 @@ List all queues with their metrics
 - `--instance [instance]` - Name of the instance to push to, override the active instance
 - `--base-url [baseUrl]` - If used with --token, will be used as the base url for the instance
 
-### resource
-
-resource related commands
-
-**Options:**
-- `--json` - Output as JSON (for piping to jq)
-
-**Subcommands:**
-
-- `resource list` - list all resources
-  - `--json` - Output as JSON (for piping to jq)
-- `resource get <path:string>` - get a resource's details
-  - `--json` - Output as JSON (for piping to jq)
-- `resource new <path:string>` - create a new resource locally
-- `resource push <file_path:string> <remote_path:string>` - push a local resource spec. This overrides any remote versions.
-
-### resource-type
-
-resource type related commands
-
-**Options:**
-- `--json` - Output as JSON (for piping to jq)
-
-**Subcommands:**
-
-- `resource-type list` - list all resource types
-  - `--schema` - Show schema in the output
-  - `--json` - Output as JSON (for piping to jq)
-- `resource-type get <path:string>` - get a resource type's details
-  - `--json` - Output as JSON (for piping to jq)
-- `resource-type new <name:string>` - create a new resource type locally
-- `resource-type push <file_path:string> <name:string>` - push a local resource spec. This overrides any remote versions.
-- `resource-type generate-namespace` - Create a TypeScript definition file with the RT namespace generated from the resource types
-
 ### schedule
 
 schedule related commands
@@ -586,17 +586,17 @@ variable related commands
 
 Show version information
 
-### worker-groups
+### worker-pool
 
-display worker groups, pull and push worker groups configs
+display worker pools, pull and push worker pool configs
 
 **Subcommands:**
 
-- `worker-groups pull` - Pull worker groups (similar to `orvanta instance pull --skip-users --skip-settings --skip-groups`)
+- `worker-pool pull` - Pull worker pool configs (similar to `orvanta instance pull --skip-users --skip-settings --skip-groups`)
   - `--instance` - Name of the instance to push to, override the active instance
   - `--base-url` - Base url to be passed to the instance settings instead of the local one
   - `--yes` - Pull without needing confirmation
-- `worker-groups push` - Push worker groups (similar to `orvanta instance push --skip-users --skip-settings --skip-groups`)
+- `worker-pool push` - Push worker pool configs (similar to `orvanta instance push --skip-users --skip-settings --skip-groups`)
   - `--instance [instance]` - Name of the instance to push to, override the active instance
   - `--base-url [baseUrl]` - If used with --token, will be used as the base url for the instance
   - `--yes` - Push without needing confirmation

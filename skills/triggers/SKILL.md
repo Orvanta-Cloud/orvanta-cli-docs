@@ -31,7 +31,7 @@ The runnable receives:
 - `raw_email` — the raw RFC 822 message as a string, **or** an S3 object (`{ s3: "orvanta_emails/<job_id>/raw.eml" }`) if the message exceeds 1 MiB.
 - `email_extra_args` (optional, only when sender appended `+key=value` extras) — a flat object of the parsed extras.
 
-With a preprocessor, all of the above are nested under `event` along with `event.kind = "email"` and `event.trigger_path` (the trigger's path). Without a preprocessor, `trigger_path` is **not** exposed — add a preprocessor if you need it.
+With a preprocessor, all of the above are nested under `event` along with `event.kind = "email"` and `event.trigger_path` (the trigger's path). Without a preprocessor, `trigger_path` is **not** exposed; add a preprocessor if you need it.
 
 ### Attachments are S3 objects
 
