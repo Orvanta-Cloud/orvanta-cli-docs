@@ -157,6 +157,30 @@ const result: orvanta.S3Object = await orvanta.writeS3File(
 
 Import: import * as orvanta from '@orvanta/client'
 
+/**
+ * Throw a BPMN business error carrying an explicit `errorCode`.
+ * 
+ * Use this — never a bare `throw` — when a script fails for a *modelled*
+ * business reason a BPMN boundary error event is meant to catch:
+ * 
+ * ```ts
+ * import { throwBusinessError } from "@orvanta/client";
+ * 
+ * export async function main(amount: number, balance: number) {
+ *   if (balance < amount) {
+ *     throwBusinessError("E_INSUFFICIENT_FUNDS", `balance ${balance} < ${amount}`);
+ *   }
+ *   return charge(amount);
+ * }
+ * ```
+ * 
+ * @param code the BPMN `errorCode`, matching the `<error errorCode="...">` the
+ *   boundary event's `errorRef` resolves to. Must be non-empty.
+ * @param message human-readable detail; defaults to `code`.
+ * @returns never — the return type is `never` so TypeScript narrows after the call.
+ */
+throwBusinessError(code: string, message?: string): never
+
 workerHasInternalServer(): boolean
 
 /**
@@ -179,6 +203,18 @@ getWorkspace(): string
  * @returns resource value
  */
 async getResource(path?: string, undefinedIfEmpty?: boolean): Promise<any>
+
+/**
+ * Get a connection value by path.
+ * 
+ * #370/#602 Phase 4: permanent alias of {@link getResource} — "Connection" is the current
+ * name for what the API/DB still call a "Resource" (presentation-layer rename only). Both
+ * names keep working; this is not deprecated.
+ * @param path path of the connection, default to internal state path
+ * @param undefinedIfEmpty if the connection does not exist, return undefined instead of throwing an error
+ * @returns connection value
+ */
+async getConnection(path?: string, undefinedIfEmpty?: boolean): Promise<any>
 
 /**
  * Get the true root job id
@@ -306,6 +342,16 @@ getStatePath(): string
  * @param initializeToTypeIfNotExist if the resource does not exist, initialize it with this type
  */
 async setResource(value: any, path?: string, initializeToTypeIfNotExist?: string): Promise<void>
+
+/**
+ * Set a connection value by path, creating it if it doesn't exist.
+ * 
+ * #370/#602 Phase 4: permanent alias of {@link setResource} — see {@link getConnection}.
+ * @param value new value of the connection to set
+ * @param path path of the connection, default to internal state path
+ * @param initializeToTypeIfNotExist if the connection does not exist, initialize it with this type
+ */
+async setConnection(value: any, path?: string, initializeToTypeIfNotExist?: string): Promise<void>
 
 /**
  * Set the state

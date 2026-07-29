@@ -76,6 +76,12 @@ properties:
   is_flow:
     type: boolean
     description: True if script_path points to a flow, false if it points to a script
+  is_bpmn:
+    type: boolean
+    description: 'True if script_path points to a BPMN flow. Read-only: such a schedule
+      is derived from the flow''s timer start event and rewritten on every deploy,
+      so it cannot be created or edited through this API (it can be enabled/disabled).
+      Mutually exclusive with is_flow.'
   args:
     type: object
     description: The arguments to pass to the script or flow

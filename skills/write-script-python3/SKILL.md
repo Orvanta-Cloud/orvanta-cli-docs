@@ -373,6 +373,15 @@ def set_resource(value: Any, path: str, resource_type: str)
 #     List of resource dictionaries
 def list_resources(resource_type: str = None, page: int = None, per_page: int = None) -> list[dict]
 
+# Get a connection value by path. Alias of get_resource().
+def get_connection(path: str, none_if_undefined: bool = False, interpolated: bool = True) -> dict | None
+
+# Set a connection value by path, creating it if it doesn't exist. Alias of set_resource().
+def set_connection(value: Any, path: str, connection_type: str)
+
+# List connections from Orvanta workspace. Alias of list_resources().
+def list_connections(connection_type: str = None, page: int = None, per_page: int = None) -> list[dict]
+
 # Set the workflow state.
 # 
 # Args:
@@ -641,6 +650,29 @@ def ducklake(name: str = 'main')
 def init_global_client(f)
 
 def deprecate(in_favor_of: str)
+
+# Raise a BPMN business error carrying an explicit ``errorCode``.
+# 
+# Use this — never a bare ``raise`` — when a script fails for a *modelled*
+# business reason a BPMN boundary error event is meant to catch::
+# 
+#     import orvanta
+# 
+#     def main(amount: float, balance: float):
+#         if balance < amount:
+#             orvanta.throw_business_error(
+#                 "E_INSUFFICIENT_FUNDS", f"balance {balance} < {amount}"
+#             )
+#         return charge(amount)
+# 
+# Args:
+#     code: the BPMN ``errorCode``, matching the ``<error errorCode="...">``
+#         the boundary event's ``errorRef`` resolves to. Must be non-empty.
+#     message: human-readable detail; defaults to ``code``.
+# 
+# Raises:
+#     BusinessError: always — this function never returns.
+def throw_business_error(code: str, message: str | None = None) -> 'None'
 
 # Get the current workspace ID.
 # 

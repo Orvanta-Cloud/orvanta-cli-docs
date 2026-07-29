@@ -115,5 +115,5 @@
       "description": "MUST use when opening the Orvanta dev page / visual preview of a flow, script, or app. Triggers on words like preview, open, navigate to, visualize, see the flow/app/script, and after writing a flow/script/app for visual verification."
     }
   ],
-  "version": "1.9.0"
+  "version": "2.0.0"
 }
