@@ -131,6 +131,44 @@ Watch local file changes and live-reload the dev page for preview. Does NOT depl
 - `--path <path:string>` - Watch a specific orvanta path (e.g., u/admin/my_script or f/my_flow)
 - `--no-open` - Do not open the browser automatically
 
+### dmn
+
+DMN decision related commands
+
+**Options:**
+- `--show-archived` - Show archived DMN decisions instead of active ones
+- `--json` - Output as JSON (for piping to jq)
+
+**Subcommands:**
+
+- `dmn list` - list all DMN decisions
+  - `--show-archived` - Show archived DMN decisions instead of active ones
+  - `--json` - Output as JSON (for piping to jq)
+- `dmn get <path:string>` - get a DMN decision's details
+  - `--json` - Output as JSON (for piping to jq)
+  - `--xml` - Output only the raw DMN 1.3 XML
+- `dmn new <path:string>` - create a new DMN decision locally (writes {path}.dmn and its sidecar)
+  - `--summary <summary:string>` - decision summary
+  - `--description <description:string>` - decision description
+- `dmn bootstrap <path:string>` - create a new DMN decision locally (alias for new)
+  - `--summary <summary:string>` - decision summary
+  - `--description <description:string>` - decision description
+- `dmn push <file_path:file> <remote_path:string>` - push a local DMN decision. This overrides any remote version. Use the raw XML file (.dmn)
+  - `--message <message:string>` - Deployment message
+- `dmn eval [path:string]` - evaluate a DMN decision (saved by path, or --file for a local .dmn)
+  - `-d --data <data:string>` - Inputs specified as a JSON string or a file using @<filename>, stdin using @- or -.
+  - `--file <file:file>` - Evaluate a local .dmn file instead of a saved decision
+  - `--decision-ref <ref:string>` - In-document <decision id> selector, when the document has more than one decision
+  - `--json` - Output the raw EvaluateResponse as JSON
+  - `-s --silent` - Only output the outputs object, as JSON. Useful for scripting.
+  - `--fail-on-no-match` - Exit 1 when no rule matched, instead of the default exit 0
+- `dmn history <path:string>` - show version history for a DMN decision
+  - `--json` - Output as JSON (for piping to jq)
+- `dmn show-version <path:string> <version:string>` - show a specific version of a DMN decision
+  - `--json` - Output as JSON (for piping to jq)
+- `dmn archive <path:string>` - archive a DMN decision
+- `dmn delete <path:string>` - permanently delete a DMN decision
+
 ### docs
 
 Search Orvanta documentation.
@@ -467,6 +505,7 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--include-groups` - Include syncing groups
   - `--include-settings` - Include syncing workspace settings
   - `--include-key` - Include workspace encryption key
+  - `--include-dmn` - Include syncing DMN decisions (opt-in: the backend workspace export doesn't emit them yet — 
   - `--skip-branch-validation` - Skip git branch validation and prompts
   - `--json-output` - Output results in JSON format
   - `-i --includes <patterns:file[]>` - Comma separated patterns to specify which file to take into account (among files that are compatible with orvanta). Patterns can include * (any string until '/') and ** (any string). Overrides orvanta.yaml includes
@@ -497,6 +536,7 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--include-groups` - Include syncing groups
   - `--include-settings` - Include syncing workspace settings
   - `--include-key` - Include workspace encryption key
+  - `--include-dmn` - Include syncing DMN decisions (opt-in: the backend workspace export doesn't emit them yet — 
   - `--skip-branch-validation` - Skip git branch validation and prompts
   - `--json-output` - Output results in JSON format
   - `-i --includes <patterns:file[]>` - Comma separated patterns to specify which file to take into account (among files that are compatible with orvanta). Patterns can include * (any string until '/') and ** (any string)
