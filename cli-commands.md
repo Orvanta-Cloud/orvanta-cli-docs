@@ -55,6 +55,38 @@ View audit logs (requires admin)
 - `audit get <id:string>` - Get a specific audit log entry
   - `--json` - Output as JSON (for piping to jq)
 
+### bpmn
+
+BPMN flow related commands
+
+**Options:**
+- `--show-archived` - Show archived BPMN flows instead of active ones
+- `--json` - Output as JSON (for piping to jq)
+
+**Subcommands:**
+
+- `bpmn list` - list all BPMN flows
+  - `--show-archived` - Show archived BPMN flows instead of active ones
+  - `--json` - Output as JSON (for piping to jq)
+- `bpmn get <path:string>` - get a BPMN flow's details
+  - `--json` - Output as JSON (for piping to jq)
+  - `--xml` - Output only the raw BPMN 2.0 XML
+- `bpmn new <path:string>` - create a new BPMN flow locally (writes {path}.bpmn and its sidecar)
+  - `--summary <summary:string>` - flow summary
+  - `--description <description:string>` - flow description
+- `bpmn bootstrap <path:string>` - create a new BPMN flow locally (alias for new)
+  - `--summary <summary:string>` - flow summary
+  - `--description <description:string>` - flow description
+- `bpmn push <file_path:file> <remote_path:string>` - push a local BPMN flow. This overrides any remote version. Use the raw XML file (.bpmn)
+  - `--message <message:string>` - Deployment message
+- `bpmn history <path:string>` - show version history for a BPMN flow
+  - `--json` - Output as JSON (for piping to jq)
+- `bpmn show-version <path:string> <version:string>` - show a specific version of a BPMN flow
+  - `--json` - Output as JSON (for piping to jq)
+  - `--xml` - Output only the raw BPMN 2.0 XML
+- `bpmn archive <path:string>` - archive a BPMN flow
+- `bpmn delete <path:string>` - permanently delete a BPMN flow
+
 ### commands
 
 List every available command
@@ -498,6 +530,7 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--skip-apps` - Skip syncing apps
   - `--skip-folders` - Skip syncing folders
   - `--skip-dmn` - Skip syncing DMN decisions
+  - `--skip-bpmn` - Skip syncing BPMN flows
   - `--skip-workspace-dependencies` - Skip syncing workspace dependencies
   - `--skip-scripts-metadata` - Skip syncing scripts metadata, focus solely on logic
   - `--include-schedules` - Include syncing  schedules
@@ -529,6 +562,7 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--skip-apps` - Skip syncing apps
   - `--skip-folders` - Skip syncing folders
   - `--skip-dmn` - Skip syncing DMN decisions
+  - `--skip-bpmn` - Skip syncing BPMN flows
   - `--skip-workspace-dependencies` - Skip syncing workspace dependencies
   - `--skip-scripts-metadata` - Skip syncing scripts metadata, focus solely on logic
   - `--include-schedules` - Include syncing schedules
