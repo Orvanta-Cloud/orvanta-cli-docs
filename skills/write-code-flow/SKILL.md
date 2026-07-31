@@ -1,6 +1,6 @@
 ---
-name: write-workflow-as-code
-description: MUST use when writing or modifying Orvanta Workflow-as-Code scripts using workflow, task, step, sleep, approvals, taskScript, taskFlow, task_script, or task_flow.
+name: write-code-flow
+description: MUST use when writing or modifying Orvanta Code Flow scripts using workflow, task, step, sleep, approvals, taskScript, taskFlow, task_script, or task_flow.
 ---
 
 ## CLI Commands
@@ -38,16 +38,16 @@ For a **visual** open-the-script-in-the-dev-page preview (rather than `script pr
 
 Use `orvanta resource-type list --schema` to discover available resource types.
 
-Workflow-as-Code files use the normal script CLI workflow. There are no separate WAC deploy commands.
+Code Flow files use the normal script CLI workflow. There are no separate Code Flow deploy commands.
 
-# Orvanta Workflow-as-Code Writing Guide
+# Orvanta Code Flow Writing Guide
 
 ## Scope
 
-Use this guide when writing or modifying Orvanta Workflow-as-Code (WAC) scripts.
-WAC is authored as a Orvanta script and deployed with the normal script workflow. It is not an OpenFlow YAML flow.
+Use this guide when writing or modifying Orvanta Code Flow scripts.
+Code Flow is authored as a Orvanta script and deployed with the normal script workflow. It is not an OpenFlow YAML flow.
 
-Supported WAC authoring targets:
+Supported Code Flow authoring targets:
 - Bun TypeScript scripts that import from `@orvanta/client`
 - Python 3 scripts that import from `orvanta`
 
@@ -98,13 +98,13 @@ Rules:
 - Bun TypeScript should export the workflow entrypoint, preferably `export const main = workflow(async (...) => { ... })`.
 - Python must use `@workflow` on an async top-level function, usually `main`.
 - Define task functions and `taskScript`/`task_script` or `taskFlow`/`task_flow` assignments at module top level with stable names.
-- Use the exact SDK names. Do not alias `workflow`, `task`, `taskScript`, `taskFlow`, `step`, `sleep`, `waitForApproval`, `task_script`, `task_flow`, or `wait_for_approval`; the WAC parser recognizes these names directly.
+- Use the exact SDK names. Do not alias `workflow`, `task`, `taskScript`, `taskFlow`, `step`, `sleep`, `waitForApproval`, `task_script`, `task_flow`, or `wait_for_approval`; the Code Flow parser recognizes these names directly.
 
 ## Checkpoint And Replay Model
 
 The parent workflow may rerun from the top after any suspension, retry, approval, or child task completion. Completed durable steps are replayed from the checkpoint.
 
-Put every side effect or non-deterministic value behind a durable WAC boundary:
+Put every side effect or non-deterministic value behind a durable Code Flow boundary:
 - Use `task()` / `@task()` for substantial work that should run as its own child job.
 - Use `taskScript()` / `task_script()` for an existing script or a relative module file.
 - Use `taskFlow()` / `task_flow()` for an existing Orvanta flow.
@@ -215,12 +215,12 @@ approval = await wait_for_approval(timeout=3600)
 
 Let task errors fail the workflow unless the user asks for recovery logic.
 
-Python: `except Exception` is safe around WAC calls because internal suspension inherits from `BaseException`. Avoid bare `except:` in workflow code. If the user asks for recovery logic around failed child work, catch `TaskError` from `orvanta` for task failures.
+Python: `except Exception` is safe around Code Flow calls because internal suspension inherits from `BaseException`. Avoid bare `except:` in workflow code. If the user asks for recovery logic around failed child work, catch `TaskError` from `orvanta` for task failures.
 
-TypeScript: avoid broad `try/catch` around WAC SDK calls. The SDK uses an internal suspension error during initial dispatch; catching it can break workflow suspension. If a broad catch is unavoidable, rethrow internal suspension errors before handling business errors.
+TypeScript: avoid broad `try/catch` around Code Flow SDK calls. The SDK uses an internal suspension error during initial dispatch; catching it can break workflow suspension. If a broad catch is unavoidable, rethrow internal suspension errors before handling business errors.
 
 
-## TypeScript Workflow-as-Code API (@orvanta/client)
+## TypeScript Code Flow API (@orvanta/client)
 
 Import: `import { workflow, task, taskScript, taskFlow, step, sleep, waitForApproval, getResumeUrls, parallel } from "@orvanta/client"`
 
@@ -275,7 +275,7 @@ export function taskScript(path: string, options?: TaskOptions): (...args: any[]
 export function taskFlow(path: string, options?: TaskOptions): (...args: any[]) => PromiseLike<any>
 
 /**
- * Mark an async function as a workflow-as-code entry point.
+ * Mark an async function as a Code Flow entry point.
  *
  * The function must be **deterministic**: given the same inputs it must call
  * tasks in the same order on every replay. Branching on task results is fine
@@ -316,7 +316,7 @@ export async function parallel<T, R>(items: T[], fn: (item: T) => PromiseLike<R>
 ```
 
 
-## Python Workflow-as-Code API (orvanta)
+## Python Code Flow API (orvanta)
 
 Import: `from orvanta import workflow, task, task_script, task_flow, step, sleep, wait_for_approval, get_resume_urls, parallel, TaskError`
 
@@ -382,7 +382,7 @@ def task_script(path: str, *, timeout: Optional[int] = None, tag: Optional[str] 
 #         result = await pipeline(input=data)
 def task_flow(path: str, *, timeout: Optional[int] = None, tag: Optional[str] = None, cache_ttl: Optional[int] = None, priority: Optional[int] = None, concurrency_limit: Optional[int] = None, concurrency_key: Optional[str] = None, concurrency_time_window_s: Optional[int] = None)
 
-# Decorator marking an async function as a workflow-as-code entry point.
+# Decorator marking an async function as a Code Flow entry point.
 #
 # The function must be **deterministic**: given the same inputs it must call
 # tasks in the same order on every replay. Branching on task results is fine

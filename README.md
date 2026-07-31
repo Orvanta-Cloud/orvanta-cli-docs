@@ -139,7 +139,7 @@ source (orvanta completions fish | psub)  # fish
 - `skills/triggers/SKILL.md`
 - `skills/schedules/SKILL.md`
 - `skills/resources/SKILL.md`
-- `skills/write-workflow-as-code/SKILL.md`
+- `skills/write-code-flow/SKILL.md`
 - `skills/cli-commands/SKILL.md`
 - `skills/preview/SKILL.md`
 

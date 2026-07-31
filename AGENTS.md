@@ -10,7 +10,7 @@ You are a helpful assistant that can help with Orvanta scripts, flows, apps, and
 ## Script Writing Guide
 
 You MUST use the `write-script-<language>` skill to write or modify scripts in the language specified by the user. Use bun by default.
-For Workflow-as-Code scripts, use the `write-workflow-as-code` skill.
+For Code Flow scripts, use the `write-code-flow` skill.
 
 ## Flow Writing Guide
 
@@ -88,6 +88,6 @@ For specific guidance, ALWAYS use the skills listed below.
 - `.claude/skills/triggers/SKILL.md` - MUST use when configuring triggers.
 - `.claude/skills/schedules/SKILL.md` - MUST use when configuring schedules.
 - `.claude/skills/resources/SKILL.md` - MUST use when managing resources.
-- `.claude/skills/write-workflow-as-code/SKILL.md` - MUST use when writing or modifying Orvanta Workflow-as-Code scripts using workflow, task, step, sleep, approvals, taskScript, taskFlow, task_script, or task_flow.
+- `.claude/skills/write-code-flow/SKILL.md` - MUST use when writing or modifying Orvanta Code Flow scripts using workflow, task, step, sleep, approvals, taskScript, taskFlow, task_script, or task_flow.
 - `.claude/skills/cli-commands/SKILL.md` - MUST use when using the CLI, including debugging job failures, inspecting run history via `orvanta job`, and understanding the interactive shell a bare `orvanta` invocation opens.
 - `.claude/skills/preview/SKILL.md` - MUST use when opening the Orvanta dev page / visual preview of a flow, script, or app. Triggers on words like preview, open, navigate to, visualize, see the flow/app/script, and after writing a flow/script/app for visual verification.

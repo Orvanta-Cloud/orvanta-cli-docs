@@ -831,7 +831,7 @@ def task_script(path: str, timeout: Optional[int] = None, tag: Optional[str] = N
 #         result = await pipeline(input=data)
 def task_flow(path: str, timeout: Optional[int] = None, tag: Optional[str] = None, cache_ttl: Optional[int] = None, priority: Optional[int] = None, concurrency_limit: Optional[int] = None, concurrency_key: Optional[str] = None, concurrency_time_window_s: Optional[int] = None)
 
-# Decorator marking an async function as a workflow-as-code entry point.
+# Decorator marking an async function as a Code Flow entry point.
 # 
 # The function must be **deterministic**: given the same inputs it must call
 # tasks in the same order on every replay. Branching on task results is fine

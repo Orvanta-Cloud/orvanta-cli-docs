@@ -497,6 +497,7 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--skip-flows` - Skip syncing flows
   - `--skip-apps` - Skip syncing apps
   - `--skip-folders` - Skip syncing folders
+  - `--skip-dmn` - Skip syncing DMN decisions
   - `--skip-workspace-dependencies` - Skip syncing workspace dependencies
   - `--skip-scripts-metadata` - Skip syncing scripts metadata, focus solely on logic
   - `--include-schedules` - Include syncing  schedules
@@ -505,7 +506,6 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--include-groups` - Include syncing groups
   - `--include-settings` - Include syncing workspace settings
   - `--include-key` - Include workspace encryption key
-  - `--include-dmn` - Include syncing DMN decisions (opt-in: the backend workspace export doesn't emit them yet — 
   - `--skip-branch-validation` - Skip git branch validation and prompts
   - `--json-output` - Output results in JSON format
   - `-i --includes <patterns:file[]>` - Comma separated patterns to specify which file to take into account (among files that are compatible with orvanta). Patterns can include * (any string until '/') and ** (any string). Overrides orvanta.yaml includes
@@ -528,6 +528,7 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--skip-flows` - Skip syncing flows
   - `--skip-apps` - Skip syncing apps
   - `--skip-folders` - Skip syncing folders
+  - `--skip-dmn` - Skip syncing DMN decisions
   - `--skip-workspace-dependencies` - Skip syncing workspace dependencies
   - `--skip-scripts-metadata` - Skip syncing scripts metadata, focus solely on logic
   - `--include-schedules` - Include syncing schedules
@@ -536,7 +537,6 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--include-groups` - Include syncing groups
   - `--include-settings` - Include syncing workspace settings
   - `--include-key` - Include workspace encryption key
-  - `--include-dmn` - Include syncing DMN decisions (opt-in: the backend workspace export doesn't emit them yet — 
   - `--skip-branch-validation` - Skip git branch validation and prompts
   - `--json-output` - Output results in JSON format
   - `-i --includes <patterns:file[]>` - Comma separated patterns to specify which file to take into account (among files that are compatible with orvanta). Patterns can include * (any string until '/') and ** (any string)

@@ -661,7 +661,7 @@ taskScript(path: string, options?: TaskOptions): (...args: any[]) => PromiseLike
 taskFlow(path: string, options?: TaskOptions): (...args: any[]) => PromiseLike<any>
 
 /**
- * Mark an async function as a workflow-as-code entry point.
+ * Mark an async function as a Code Flow entry point.
  * 
  * The function must be **deterministic**: given the same inputs it must call
  * tasks in the same order on every replay. Branching on task results is fine
