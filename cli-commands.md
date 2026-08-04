@@ -86,6 +86,22 @@ BPMN flow related commands
   - `--xml` - Output only the raw BPMN 2.0 XML
 - `bpmn archive <path:string>` - archive a BPMN flow
 - `bpmn delete <path:string>` - permanently delete a BPMN flow
+- `bpmn migrate-check <path:string> <from_version:string> <to_version:string>` - check whether one BPMN definition version can be migrated to another, without touching any instance
+  - `--json` - Output as JSON (for piping to jq)
+- `bpmn migrate <instance_id:string> <target_version:string>` - migrate one running BPMN process instance to another definition version
+  - `--dry-run` - Validate and report eligibility; write nothing
+  - `--json` - Output as JSON (for piping to jq)
+- `bpmn migrate-bulk <from_version:string> <target_version:string>` - migrate every running instance pinned to a definition version
+  - `--dry-run` - Validate and report eligibility; write nothing
+  - `--json` - Output as JSON (for piping to jq)
+- `bpmn delegates` - BPMN delegate binding commands -- the export/import checklist for unbound Flowable delegates (flowable:class / delegateExpression / expression). Run "export" first.
+- `bpmn delegates list` - list existing BPMN delegate bindings in this workspace
+  - `--json` - Output as JSON (for piping to jq)
+- `bpmn delegates export [output_path:string]` - generate the unbound-delegate checklist -- every delegate key referenced in the workspace deployed and draft BPMN definitions that has no binding yet
+  - `-o, --output <path:string>` - output file path (default: bpmn_delegates.yaml)
+- `bpmn delegates import <file_path:file>` - bind every filled-in entry from a checklist file (requires workspace admin)
+  - `--folder <folder:string>` - folder a brand-new binding is created under (default: f/bpmn_delegates); ignored for a key that is already bound
+  - `--dry-run` - print what would be imported without writing anything
 
 ### commands
 
@@ -194,6 +210,13 @@ DMN decision related commands
   - `--json` - Output the raw EvaluateResponse as JSON
   - `-s --silent` - Only output the outputs object, as JSON. Useful for scripting.
   - `--fail-on-no-match` - Exit 1 when no rule matched, instead of the default exit 0
+- `dmn service [path:string]` - evaluate a DMN decision service (DRD) as one unit — every decision below a <decisionService>, in dependency order
+  - `-d --data <data:string>` - Inputs specified as a JSON string or a file using @<filename>, stdin using @- or -.
+  - `--file <file:file>` - Evaluate a local .dmn file instead of a saved decision
+  - `--service-ref <ref:string>` - In-document <decisionService id> to run. Optional when the document declares exactly one; a document with several names them all in the error.
+  - `--json` - Output the raw EvaluateServiceResponse as JSON
+  - `-s --silent` - Only output the outputs value, as JSON. Useful for scripting.
+  - `--fail-on-no-match` - Exit 1 when no rule matched in any output decision, instead of the default exit 0
 - `dmn history <path:string>` - show version history for a DMN decision
   - `--json` - Output as JSON (for piping to jq)
 - `dmn show-version <path:string> <version:string>` - show a specific version of a DMN decision
@@ -419,14 +442,7 @@ Manage jobs (list, inspect, cancel)
 
 ### jobs
 
-Pull completed and queued jobs from workspace
-
-**Arguments:** `[workspace:string]`
-
-**Options:**
-- `-c, --completed-output <file:string>` - Completed jobs output file (default: completed_jobs.json)
-- `-q, --queued-output <file:string>` - Queued jobs output file (default: queued_jobs.json)
-- `--skip-worker-check` - Skip checking for active workers before export
+Manage jobs (import/export)
 
 **Subcommands:**
 
