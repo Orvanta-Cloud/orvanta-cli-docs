@@ -233,6 +233,26 @@ connection type related commands
 - `connection-type push <file_path:string> <name:string>` - push a local connection type spec. This overrides any remote versions.
 - `connection-type generate-namespace` - Create a TypeScript definition file with the RT namespace generated from the connection types
 
+### data-migration
+
+data migration definition related commands
+
+**Options:**
+- `--json` - Output as JSON (for piping to jq)
+
+**Subcommands:**
+
+- `data-migration list` - list all data migration definitions
+  - `--json` - Output as JSON (for piping to jq)
+  - `--show-archived` - List archived definitions instead of live ones
+- `data-migration get <path:string>` - get a data migration definition's details
+  - `--json` - Output as JSON (for piping to jq)
+- `data-migration new <path:string>` - create a new data migration definition locally
+- `data-migration push <file_path:string> <remote_path:string>` - push a local data migration definition. This overrides any remote version.
+- `data-migration archive <path:string>` - archive a data migration definition (soft; stops it syncing to git)
+  - `--unarchive` - Unarchive instead of archiving
+- `data-migration delete <path:string>` - permanently delete a data migration definition
+
 ### dependencies
 
 workspace dependencies related commands
@@ -621,6 +641,8 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--skip-folders` - Skip syncing folders
   - `--skip-dmn` - Skip syncing DMN decisions
   - `--skip-bpmn` - Skip syncing BPMN flows
+  - `--skip-data-migrations` - Skip syncing data migration definitions
+  - `--skip-cmmn` - Skip syncing CMMN case models (.cmmn + .cmmn_case.json)
   - `--skip-workspace-dependencies` - Skip syncing workspace dependencies
   - `--skip-scripts-metadata` - Skip syncing scripts metadata, focus solely on logic
   - `--include-schedules` - Include syncing  schedules
@@ -639,6 +661,7 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--branch, --env <branch:string>` - [Deprecated: use --workspace] Override the current git branch/environment
 - `sync push` - Push any local changes and apply them remotely.
   - `--yes` - Push without needing confirmation
+  - `--allow-unrecognized-deletes` - Allow deleting remote objects whose local file exists under a filename this sync mode does not read (e.g. a repository written by server-side git sync). Off by default: without it such a push proposes deleting the whole workspace (orvanta-platform#1498).
   - `--dry-run` - Show changes that would be pushed without actually pushing
   - `--plain-secrets` - Push secrets as plain text
   - `--json` - Use JSON instead of YAML
@@ -653,6 +676,8 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--skip-folders` - Skip syncing folders
   - `--skip-dmn` - Skip syncing DMN decisions
   - `--skip-bpmn` - Skip syncing BPMN flows
+  - `--skip-data-migrations` - Skip syncing data migration definitions
+  - `--skip-cmmn` - Skip syncing CMMN case models (.cmmn + .cmmn_case.json)
   - `--skip-workspace-dependencies` - Skip syncing workspace dependencies
   - `--skip-scripts-metadata` - Skip syncing scripts metadata, focus solely on logic
   - `--include-schedules` - Include syncing schedules

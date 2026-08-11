@@ -626,9 +626,6 @@ def request_interactive_slack_approval(slack_resource_path: str, channel_id: str
 # Indeed, in the viewer context OV_USERNAME is set to the username of the viewer but OV_EMAIL is set to the email of the creator of the app.
 def username_to_email(username: str) -> str
 
-# Send a message to a Microsoft Teams conversation with conversation_id, where success is used to style the message
-def send_teams_message(conversation_id: str, text: str, success: bool = True, card_block: dict = None)
-
 # Get a DataTable client for SQL queries.
 # 
 # Args:
