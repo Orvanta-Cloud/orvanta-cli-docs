@@ -2,9 +2,9 @@
 
 `orvanta` is the official command line interface for
 [Orvanta](https://docs.orvanta.cloud), a visual-first polyglot automation
-platform for scripts, flows, triggers, schedules, resources, and apps. Use it
+platform for scripts, flows, triggers, schedules, and resources. Use it
 to authenticate against a workspace, scaffold local projects, sync
-scripts/flows/apps between your filesystem and a workspace, and run or debug
+scripts/flows between your filesystem and a workspace, and run or debug
 jobs from your terminal.
 
 ## Install
@@ -51,7 +51,7 @@ import git-sync settings from the backend if any are configured.
 ## Sync between local files and a workspace
 
 ```sh
-orvanta sync pull     # workspace → local (writes flows, scripts, apps, etc.)
+orvanta sync pull     # workspace → local (writes flows, scripts, etc.)
 orvanta sync push     # local → workspace
 ```
 
@@ -63,7 +63,6 @@ For individual entities you can also use the type-specific commands:
 ```sh
 orvanta script push   path/to/script.ts
 orvanta flow   push   path/to/flow.yaml
-orvanta app    push   path/to/app.yaml
 orvanta resource push path/to/resource.yaml
 ```
 
@@ -82,7 +81,6 @@ orvanta job logs <job_id>
 ```sh
 orvanta script new u/me/path --language bun
 orvanta flow   new u/me/path --summary "..."
-orvanta app    new u/me/path --summary "..." --framework svelte
 ```
 
 These create the correct folder layout and a minimal spec file. Prefer them
@@ -118,24 +116,17 @@ source (orvanta completions fish | psub)  # fish
 - `skills/write-script-bigquery/SKILL.md`
 - `skills/write-script-bun/SKILL.md`
 - `skills/write-script-bunnative/SKILL.md`
-- `skills/write-script-csharp/SKILL.md`
-- `skills/write-script-deno/SKILL.md`
 - `skills/write-script-duckdb/SKILL.md`
 - `skills/write-script-go/SKILL.md`
 - `skills/write-script-graphql/SKILL.md`
 - `skills/write-script-java/SKILL.md`
-- `skills/write-script-mssql/SKILL.md`
 - `skills/write-script-mysql/SKILL.md`
 - `skills/write-script-nativets/SKILL.md`
 - `skills/write-script-php/SKILL.md`
 - `skills/write-script-postgresql/SKILL.md`
-- `skills/write-script-powershell/SKILL.md`
 - `skills/write-script-python3/SKILL.md`
-- `skills/write-script-rlang/SKILL.md`
 - `skills/write-script-rust/SKILL.md`
-- `skills/write-script-snowflake/SKILL.md`
 - `skills/write-flow/SKILL.md`
-- `skills/raw-app/SKILL.md`
 - `skills/triggers/SKILL.md`
 - `skills/schedules/SKILL.md`
 - `skills/resources/SKILL.md`

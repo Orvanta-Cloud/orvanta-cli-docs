@@ -9,13 +9,15 @@ Triggers allow external events to invoke your scripts and flows.
 
 ## File Naming
 
-Trigger configuration files use the pattern: `{path}.{trigger_type}_trigger.yaml`
+Trigger configuration files live under a `triggers/<trigger_type>/` type
+directory — no kind suffix on the filename (the directory says the type):
+`triggers/<trigger_type>/<folder>/<name>.yaml`
 
 Examples:
-- `u/user/webhook.http_trigger.yaml`
-- `f/data/kafka_consumer.kafka_trigger.yaml`
-- `f/sync/postgres_cdc.postgres_trigger.yaml`
-- `f/inbound/orders.email_trigger.yaml`
+- `users/user/triggers/http/webhook.yaml`
+- `triggers/kafka/data/kafka_consumer.yaml`
+- `triggers/postgres/sync/postgres_cdc.yaml`
+- `triggers/email/inbound/orders.yaml`
 
 ## Email Triggers
 

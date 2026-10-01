@@ -1,6 +1,6 @@
 # Orvanta AI Agent Instructions
 
-You are a helpful assistant that can help with Orvanta scripts, flows, apps, and resources management.
+You are a helpful assistant that can help with Orvanta scripts, flows, and resources management.
 
 ## Important Notes
 - Every new entity MUST be created using the skills listed below.
@@ -17,11 +17,6 @@ For Code Flow scripts, use the `write-code-flow` skill.
 You MUST use the `write-flow` skill to create or modify flows.
 When a new flow needs to be created, YOU run `orvanta flow new <path>` yourself (with `--summary` and optional `--description`) to scaffold the folder and `flow.yaml`, then edit `flow.yaml` to fill in modules and schema. Do NOT scaffold the folder + yaml by hand and do NOT tell the user to run `orvanta flow new`. If path or summary are missing from the user's request, ask via `AskUserQuestion` (one call, all missing fields). Never invent them. See the `write-flow` skill for the procedure.
 
-## Raw App Development
-
-You MUST use the `raw-app` skill to create or modify raw apps.
-When a new app needs to be created, YOU run `orvanta app new` yourself with `--summary`, `--path`, and `--framework` flags (and any other relevant flags). Do NOT ask the user to run it. If you don't have the values for those flags, ask the user via `AskUserQuestion` (one call, all missing fields). Never invent them. See the `raw-app` skill for the full procedure.
-
 ## Triggers
 
 You MUST use the `triggers` skill to configure HTTP routes, WebSocket, Kafka, NATS, SQS, MQTT, GCP, Azure, Email, or Postgres CDC triggers.
@@ -36,7 +31,7 @@ You MUST use the `resources` skill to manage resource types and credentials.
 
 ## Visual Preview
 
-You MUST use the `preview` skill any time the user wants to see/open/visualize/preview a flow, script, or app in the dev page, and after writing one, when offering visual verification. The skill picks between an MCP-embedded proxy (one named `launch.json` entry per target) and direct mode (URL handed to the user) based on what tools you have.
+You MUST use the `preview` skill any time the user wants to see/open/visualize/preview a flow or script in the dev page, and after writing one, when offering visual verification. The skill picks between an MCP-embedded proxy (one named `launch.json` entry per target) and direct mode (URL handed to the user) based on what tools you have.
 
 ## CLI Reference
 
@@ -67,27 +62,20 @@ For specific guidance, ALWAYS use the skills listed below.
 - `.claude/skills/write-script-bigquery/SKILL.md` - MUST use when writing BigQuery queries.
 - `.claude/skills/write-script-bun/SKILL.md` - MUST use when writing Bun/TypeScript scripts.
 - `.claude/skills/write-script-bunnative/SKILL.md` - MUST use when writing Bun Native scripts.
-- `.claude/skills/write-script-csharp/SKILL.md` - MUST use when writing C# scripts.
-- `.claude/skills/write-script-deno/SKILL.md` - MUST use when writing Deno/TypeScript scripts.
 - `.claude/skills/write-script-duckdb/SKILL.md` - MUST use when writing DuckDB queries.
 - `.claude/skills/write-script-go/SKILL.md` - MUST use when writing Go scripts.
 - `.claude/skills/write-script-graphql/SKILL.md` - MUST use when writing GraphQL queries.
 - `.claude/skills/write-script-java/SKILL.md` - MUST use when writing Java scripts.
-- `.claude/skills/write-script-mssql/SKILL.md` - MUST use when writing MS SQL Server queries.
 - `.claude/skills/write-script-mysql/SKILL.md` - MUST use when writing MySQL queries.
 - `.claude/skills/write-script-nativets/SKILL.md` - MUST use when writing Native TypeScript scripts.
 - `.claude/skills/write-script-php/SKILL.md` - MUST use when writing PHP scripts.
 - `.claude/skills/write-script-postgresql/SKILL.md` - MUST use when writing PostgreSQL queries.
-- `.claude/skills/write-script-powershell/SKILL.md` - MUST use when writing PowerShell scripts.
 - `.claude/skills/write-script-python3/SKILL.md` - MUST use when writing Python scripts.
-- `.claude/skills/write-script-rlang/SKILL.md` - MUST use when writing R scripts.
 - `.claude/skills/write-script-rust/SKILL.md` - MUST use when writing Rust scripts.
-- `.claude/skills/write-script-snowflake/SKILL.md` - MUST use when writing Snowflake queries.
 - `.claude/skills/write-flow/SKILL.md` - MUST use when creating flows.
-- `.claude/skills/raw-app/SKILL.md` - MUST use when creating raw apps.
 - `.claude/skills/triggers/SKILL.md` - MUST use when configuring triggers.
 - `.claude/skills/schedules/SKILL.md` - MUST use when configuring schedules.
 - `.claude/skills/resources/SKILL.md` - MUST use when managing resources.
 - `.claude/skills/write-code-flow/SKILL.md` - MUST use when writing or modifying Orvanta Code Flow scripts using workflow, task, step, sleep, approvals, taskScript, taskFlow, task_script, or task_flow.
 - `.claude/skills/cli-commands/SKILL.md` - MUST use when using the CLI, including debugging job failures, inspecting run history via `orvanta job`, and understanding the interactive shell a bare `orvanta` invocation opens.
-- `.claude/skills/preview/SKILL.md` - MUST use when opening the Orvanta dev page / visual preview of a flow, script, or app. Triggers on words like preview, open, navigate to, visualize, see the flow/app/script, and after writing a flow/script/app for visual verification.
+- `.claude/skills/preview/SKILL.md` - MUST use when opening the Orvanta dev page / visual preview of a flow or script. Triggers on words like preview, open, navigate to, visualize, see the flow/script, and after writing a flow/script for visual verification.

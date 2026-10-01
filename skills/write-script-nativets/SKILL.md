@@ -30,7 +30,7 @@ Only use `sync push` when:
 
 If the user hasn't already told you to run/test/preview the script, offer it as a one-sentence next step (e.g. "Want me to run `orvanta script preview` with sample args?"). Do not present a multi-option menu.
 
-If the user already asked to test/run/try the script in their original request, skip the offer and just execute `orvanta script preview <path> -d '<args>'` directly. Pick plausible args from the script's declared parameters. The shape varies by language: `main(...)` for code languages, the SQL dialect's own placeholder syntax (`$1` for PostgreSQL, `?` for MySQL/Snowflake, `@P1` for MSSQL, `@name` for BigQuery, etc.), positional `$1`, `$2`, … for Bash, `param(...)` for PowerShell.
+If the user already asked to test/run/try the script in their original request, skip the offer and just execute `orvanta script preview <path> -d '<args>'` directly. Pick plausible args from the script's declared parameters. The shape varies by language: `main(...)` for code languages, the SQL dialect's own placeholder syntax (`$1` for PostgreSQL, `?` for MySQL, `@name` for BigQuery, etc.), positional `$1`, `$2`, … for Bash.
 
 `orvanta script preview` does not deploy, but it still executes script code and may cause side effects; run it yourself when the user asked to test/preview (or after confirming that execution is intended). `orvanta sync push` and `orvanta generate-metadata` modify workspace state or local files; only run these when the user explicitly asks, otherwise tell them which to run.
 
@@ -440,35 +440,6 @@ async loadS3FileStream(s3object: S3Object, s3ResourcePath: string | undefined = 
 async writeS3File(s3object: S3Object | undefined, fileContent: string | Blob, s3ResourcePath: string | undefined = undefined, contentType: string | undefined = undefined, contentDisposition: string | undefined = undefined): Promise<S3Object>
 
 /**
- * Sign S3 objects to be used by anonymous users in public apps
- * @param s3objects s3 objects to sign
- * @returns signed s3 objects
- */
-async signS3Objects(s3objects: S3Object[]): Promise<S3Object[]>
-
-/**
- * Sign S3 object to be used by anonymous users in public apps
- * @param s3object s3 object to sign
- * @returns signed s3 object
- */
-async signS3Object(s3object: S3Object): Promise<S3Object>
-
-/**
- * Generate a presigned public URL for an array of S3 objects.
- * If an S3 object is not signed yet, it will be signed first.
- * @param s3Objects s3 objects to sign
- * @returns list of signed public URLs
- */
-async getPresignedS3PublicUrls(s3Objects: S3Object[], { baseUrl }: { baseUrl?: string } = {}): Promise<string[]>
-
-/**
- * Generate a presigned public URL for an S3 object. If the S3 object is not signed yet, it will be signed first.
- * @param s3Object s3 object to sign
- * @returns signed public URL
- */
-async getPresignedS3PublicUrl(s3Objects: S3Object, { baseUrl }: { baseUrl?: string } = {}): Promise<string>
-
-/**
  * Get URLs needed for resuming a flow after this step
  * @param approver approver name
  * @param flowLevel if true, generate resume URLs for the parent flow instead of the specific step.
@@ -514,8 +485,6 @@ uint8ArrayToBase64(arrayBuffer: Uint8Array): string
 
 /**
  * Get email from workspace username
- * This method is particularly useful for apps that require the email address of the viewer.
- * Indeed, in the viewer context, OV_USERNAME is set to the username of the viewer but OV_EMAIL is set to the email of the creator of the app.
  * @param username
  * @returns email address
  */

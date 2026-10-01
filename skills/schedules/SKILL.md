@@ -9,11 +9,12 @@ Schedules run scripts and flows automatically on a cron schedule.
 
 ## File Naming
 
-Schedule files use the pattern: `{path}.schedule.yaml`
+Schedule files live under the `schedules/` type directory — no kind suffix
+(the directory is the type marker): `schedules/<folder>/<name>.yaml`
 
-Example: `f/folder/daily_sync.schedule.yaml`
+Example: `schedules/folder/daily_sync.yaml`
 
-Note: The path is derived from the filename, not stored in the file content.
+Note: The path is derived from the file's location, not stored in the file content.
 
 ## Cron Expression Format
 

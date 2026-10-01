@@ -74,7 +74,7 @@ human-facing surface. Automate against the one-shot commands and
 
 # Orvanta CLI Commands
 
-The Orvanta CLI (`orvanta`) provides commands for managing scripts, flows, apps, and other resources.
+The Orvanta CLI (`orvanta`) provides commands for managing scripts, flows, and other resources.
 
 ## Global Options
 
@@ -84,40 +84,9 @@ The Orvanta CLI (`orvanta`) provides commands for managing scripts, flows, apps,
 - `--token <token:string>` - Specify an API token. This will override any stored token.
 - `--base-url <baseUrl:string>` - Specify the base URL of the API. If used, --token and --workspace are required and no local remote/workspace already set will be used.
 - `--config-dir <configDir:string>` - Specify a custom config directory. Overrides OV_CONFIG_DIR environment variable and default ~/.config location.
+- `--allow-custom-bundler` - Allow running a customBundler from orvanta.yaml, which executes as a shell command (#1858). Pass this, or set ORVANTA_ALLOW_CUSTOM_BUNDLER=1, only for a trusted repository.
 
 ## Commands
-
-### app
-
-app related commands
-
-**Options:**
-- `--json` - Output as JSON (for piping to jq)
-
-**Subcommands:**
-
-- `app list` - list all apps
-  - `--json` - Output as JSON (for piping to jq)
-- `app get <path:string>` - get an app's details
-  - `--json` - Output as JSON (for piping to jq)
-- `app push <file_path:string> <remote_path:string>` - push a local app 
-- `app dev [app_folder:string]` - Start a development server for building apps with live reload and hot module replacement
-  - `--port <port:number>` - Port to run the dev server on (will find next available port if occupied)
-  - `--host <host:string>` - Host to bind the dev server to
-  - `--entry <entry:string>` - Entry point file (default: index.ts for Svelte/Vue, index.tsx otherwise)
-  - `--no-open` - Don't automatically open the browser
-- `app lint [app_folder:string]` - Lint a raw app folder to validate structure and buildability
-  - `--fix` - Attempt to fix common issues (not implemented yet)
-- `app new` - create a new raw app from a template
-  - `--summary <summary:string>` - App summary (short description). Skips the prompt when provided. Triggers non-interactive mode.
-  - `--path <path:string>` - App path (e.g., f/folder/my_app or u/username/my_app). Skips the prompt when provided. Triggers non-interactive mode.
-  - `--framework <framework:string>` - Framework template: react19 | react18 | svelte5 | vue. Skips the prompt when provided. Triggers non-interactive mode.
-  - `--datatable <datatable:string>` - Datatable to wire up. Without this flag in non-interactive mode, no datatable is configured.
-  - `--schema <schema:string>` - Schema to use with --datatable. Created (CREATE SCHEMA IF NOT EXISTS) if it doesn't already exist.
-  - `--overwrite` - Overwrite the target directory if it already exists, without prompting.
-  - `--no-open-in-desktop` - Do not prompt to open the new app in Claude Desktop.
-- `app generate-agents [app_folder:string]` - regenerate AGENTS.md and DATATABLES.md from remote workspace
-- `app set-permissioned-as <path:string> <email:string>` - Set the on_behalf_of_email for an app (requires admin or wm_deployers group)
 
 ### audit
 
@@ -379,7 +348,7 @@ folder related commands
 - `folder new <name:string>` - create a new folder locally
   - `--summary <summary:string>` - folder summary
 - `folder push <name:string>` - push a local folder to the remote by name. This overrides any remote versions.
-- `folder add-missing` - create default folder.meta.yaml for all subdirectories of f/ that are missing one
+- `folder add-missing` - create a default folders/<name>.yaml for every folder a local object lives in that has none
   - `-y, --yes` - skip confirmation prompt
 - `folder show-rules <name:string>` - Show default_permissioned_as rules for a folder. Use --test-path to see which rule matches a given item path.
   - `--test-path <path:string>` - Test which rule matches this item path (e.g. f/prod/jobs/my_script)
@@ -387,7 +356,7 @@ folder related commands
 
 ### generate-metadata
 
-Generate metadata (locks, schemas) for all scripts, flows, and apps
+Generate metadata (locks, schemas) for all scripts and flows
 
 **Arguments:** `[folder:string]`
 
@@ -395,10 +364,9 @@ Generate metadata (locks, schemas) for all scripts, flows, and apps
 - `--yes` - Skip confirmation prompt
 - `--dry-run` - Show what would be updated without making changes
 - `--lock-only` - Re-generate only the lock files
-- `--schema-only` - Re-generate only script schemas (skips flows and apps)
+- `--schema-only` - Re-generate only script schemas (skips flows)
 - `--skip-scripts` - Skip processing scripts
 - `--skip-flows` - Skip processing flows
-- `--skip-apps` - Skip processing apps
 - `--strict-folder-boundaries` - Only update items inside the specified folder (requires folder argument)
 - `--parallel <n:number>` - Number of items to process in parallel
 - `-i --includes <patterns:file[]>` - Comma separated patterns to specify which files to include
@@ -409,7 +377,6 @@ Generate metadata (locks, schemas) for all scripts, flows, and apps
 - `generate-metadata rehash [folder:string]`
   - `--skip-scripts` - Skip processing scripts
   - `--skip-flows` - Skip processing flows
-  - `--skip-apps` - Skip processing apps
   - `--parallel <n:number>` - Number of items to process in parallel
   - `-i --includes <patterns:file[]>` - Comma separated patterns to specify which files to include
   - `-e --excludes <patterns:file[]>` - Comma separated patterns to specify which files to exclude
@@ -494,6 +461,7 @@ sync local with a remote instance or the opposite (push or pull)
   - `--skip-groups` - Skip pulling instance groups
   - `--include-workspaces` - Also pull workspaces
   - `--folder-per-instance` - Create a folder per instance
+  - `--plain-secrets` - Write secret instance settings (license key, JWT secret, OAuth/SMTP credentials, registry configs) in plain text. By default they are written as an empty placeholder, or encrypted when OV_INSTANCE_LOCAL_ENCRYPTION_KEY is set; a push keeps the stored value for a placeholder
   - `--instance <instance:string>` - Name of the instance to pull from, override the active instance
   - `--prefix <prefix:string>` - Prefix of the local workspaces to pull, used to create the folders when using --include-workspaces
   - `--prefix-settings` - Store instance yamls inside prefixed folders when using --prefix and --folder-per-instance
@@ -628,8 +596,8 @@ sync local with a remote workspaces or the opposite (push or pull)
 - `sync pull` - Pull any remote changes and apply them locally.
   - `--yes` - Pull without needing confirmation
   - `--dry-run` - Show changes that would be pulled without actually pushing
-  - `--plain-secrets` - Pull secrets as plain text
-  - `--json` - Use JSON instead of YAML
+  - `--plain-secrets` - Pull secrets as plain text (workspace admins only)
+  - `--encrypted-secrets` - Pull secret variables with their workspace ciphertext instead of an empty placeholder, to copy them to another workspace. Never commit the result; refused with --include-key inside a git repository
   - `--skip-variables` - Skip syncing variables (including secrets)
   - `--skip-secrets` - Skip syncing only secrets variables
   - `--include-secrets` - Include secrets in sync (overrides skipSecrets in orvanta.yaml)
@@ -637,12 +605,11 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--skip-resource-types` - Skip syncing  resource types
   - `--skip-scripts` - Skip syncing scripts
   - `--skip-flows` - Skip syncing flows
-  - `--skip-apps` - Skip syncing apps
   - `--skip-folders` - Skip syncing folders
   - `--skip-dmn` - Skip syncing DMN decisions
   - `--skip-bpmn` - Skip syncing BPMN flows
   - `--skip-data-migrations` - Skip syncing data migration definitions
-  - `--skip-cmmn` - Skip syncing CMMN case models (.cmmn + .cmmn_case.json)
+  - `--skip-cmmn` - Skip syncing CMMN case models (.cmmn + .cmmn_case.yaml)
   - `--skip-workspace-dependencies` - Skip syncing workspace dependencies
   - `--skip-scripts-metadata` - Skip syncing scripts metadata, focus solely on logic
   - `--include-schedules` - Include syncing  schedules
@@ -651,6 +618,7 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--include-groups` - Include syncing groups
   - `--include-settings` - Include syncing workspace settings
   - `--include-key` - Include workspace encryption key
+  - `--allow-key-in-git` - Allow --include-key to write the workspace encryption key into a git working tree (refused otherwise)
   - `--skip-branch-validation` - Skip git branch validation and prompts
   - `--json-output` - Output results in JSON format
   - `-i --includes <patterns:file[]>` - Comma separated patterns to specify which file to take into account (among files that are compatible with orvanta). Patterns can include * (any string until '/') and ** (any string). Overrides orvanta.yaml includes
@@ -661,10 +629,11 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--branch, --env <branch:string>` - [Deprecated: use --workspace] Override the current git branch/environment
 - `sync push` - Push any local changes and apply them remotely.
   - `--yes` - Push without needing confirmation
-  - `--allow-unrecognized-deletes` - Allow deleting remote objects whose local file exists under a filename this sync mode does not read (e.g. a repository written by server-side git sync). Off by default: without it such a push proposes deleting the whole workspace (orvanta-platform#1498).
+  - `--allow-unrecognized-deletes` - Allow deleting remote objects whose local file exists under another spelling (a script under another language's extension, a pre-6.0.0 .json metadata file). Off by default (orvanta-platform#1498).
   - `--dry-run` - Show changes that would be pushed without actually pushing
   - `--plain-secrets` - Push secrets as plain text
-  - `--json` - Use JSON instead of YAML
+  - `--encrypted-secrets` - Compare against the workspace ciphertext of secret variables (for a checkout pulled with --encrypted-secrets)
+  - `--clear-empty-secrets` - Push a secret variable whose local value is empty as an empty secret, and clear a secret settings field (Slack OAuth client secret) whose value is empty. Without it an empty value is a placeholder and never overwrites the secret
   - `--skip-variables` - Skip syncing variables (including secrets)
   - `--skip-secrets` - Skip syncing only secrets variables
   - `--include-secrets` - Include secrets in sync (overrides skipSecrets in orvanta.yaml)
@@ -672,12 +641,11 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--skip-resource-types` - Skip syncing  resource types
   - `--skip-scripts` - Skip syncing scripts
   - `--skip-flows` - Skip syncing flows
-  - `--skip-apps` - Skip syncing apps
   - `--skip-folders` - Skip syncing folders
   - `--skip-dmn` - Skip syncing DMN decisions
   - `--skip-bpmn` - Skip syncing BPMN flows
   - `--skip-data-migrations` - Skip syncing data migration definitions
-  - `--skip-cmmn` - Skip syncing CMMN case models (.cmmn + .cmmn_case.json)
+  - `--skip-cmmn` - Skip syncing CMMN case models (.cmmn + .cmmn_case.yaml)
   - `--skip-workspace-dependencies` - Skip syncing workspace dependencies
   - `--skip-scripts-metadata` - Skip syncing scripts metadata, focus solely on logic
   - `--include-schedules` - Include syncing schedules
@@ -691,7 +659,7 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `-i --includes <patterns:file[]>` - Comma separated patterns to specify which file to take into account (among files that are compatible with orvanta). Patterns can include * (any string until '/') and ** (any string)
   - `-e --excludes <patterns:file[]>` - Comma separated patterns to specify which file to NOT take into account.
   - `--extra-includes <patterns:file[]>` - Comma separated patterns to specify which file to take into account (among files that are compatible with orvanta). Patterns can include * (any string until '/') and ** (any string). Useful to still take orvanta.yaml into account and act as a second pattern to satisfy
-  - `--message <message:string>` - Include a message that will be added to all scripts/flows/apps updated during this push
+  - `--message <message:string>` - Include a message that will be added to all scripts/flows updated during this push
   - `--parallel <number>` - Number of changes to process in parallel
   - `--repository <repo:string>` - Specify repository path (e.g., u/user/repo) when multiple repositories exist
   - `--branch, --env <branch:string>` - [Deprecated: use --workspace] Override the current git branch/environment

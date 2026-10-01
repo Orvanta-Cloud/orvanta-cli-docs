@@ -19,14 +19,6 @@
       "description": "MUST use when writing Bun Native scripts."
     },
     {
-      "name": "write-script-csharp",
-      "description": "MUST use when writing C# scripts."
-    },
-    {
-      "name": "write-script-deno",
-      "description": "MUST use when writing Deno/TypeScript scripts."
-    },
-    {
       "name": "write-script-duckdb",
       "description": "MUST use when writing DuckDB queries."
     },
@@ -41,10 +33,6 @@
     {
       "name": "write-script-java",
       "description": "MUST use when writing Java scripts."
-    },
-    {
-      "name": "write-script-mssql",
-      "description": "MUST use when writing MS SQL Server queries."
     },
     {
       "name": "write-script-mysql",
@@ -63,32 +51,16 @@
       "description": "MUST use when writing PostgreSQL queries."
     },
     {
-      "name": "write-script-powershell",
-      "description": "MUST use when writing PowerShell scripts."
-    },
-    {
       "name": "write-script-python3",
       "description": "MUST use when writing Python scripts."
-    },
-    {
-      "name": "write-script-rlang",
-      "description": "MUST use when writing R scripts."
     },
     {
       "name": "write-script-rust",
       "description": "MUST use when writing Rust scripts."
     },
     {
-      "name": "write-script-snowflake",
-      "description": "MUST use when writing Snowflake queries."
-    },
-    {
       "name": "write-flow",
       "description": "MUST use when creating flows."
-    },
-    {
-      "name": "raw-app",
-      "description": "MUST use when creating raw apps."
     },
     {
       "name": "triggers",
@@ -112,8 +84,8 @@
     },
     {
       "name": "preview",
-      "description": "MUST use when opening the Orvanta dev page / visual preview of a flow, script, or app. Triggers on words like preview, open, navigate to, visualize, see the flow/app/script, and after writing a flow/script/app for visual verification."
+      "description": "MUST use when opening the Orvanta dev page / visual preview of a flow or script. Triggers on words like preview, open, navigate to, visualize, see the flow/script, and after writing a flow/script for visual verification."
     }
   ],
-  "version": "4.1.0"
+  "version": "6.2.0"
 }

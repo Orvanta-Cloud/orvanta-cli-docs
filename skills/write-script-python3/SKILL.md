@@ -30,7 +30,7 @@ Only use `sync push` when:
 
 If the user hasn't already told you to run/test/preview the script, offer it as a one-sentence next step (e.g. "Want me to run `orvanta script preview` with sample args?"). Do not present a multi-option menu.
 
-If the user already asked to test/run/try the script in their original request, skip the offer and just execute `orvanta script preview <path> -d '<args>'` directly. Pick plausible args from the script's declared parameters. The shape varies by language: `main(...)` for code languages, the SQL dialect's own placeholder syntax (`$1` for PostgreSQL, `?` for MySQL/Snowflake, `@P1` for MSSQL, `@name` for BigQuery, etc.), positional `$1`, `$2`, … for Bash, `param(...)` for PowerShell.
+If the user already asked to test/run/try the script in their original request, skip the offer and just execute `orvanta script preview <path> -d '<args>'` directly. Pick plausible args from the script's declared parameters. The shape varies by language: `main(...)` for code languages, the SQL dialect's own placeholder syntax (`$1` for PostgreSQL, `?` for MySQL, `@name` for BigQuery, etc.), positional `$1`, `$2`, … for Bash.
 
 `orvanta script preview` does not deploy, but it still executes script code and may cause side effects; run it yourself when the user asked to test/preview (or after confirming that execution is intended). `orvanta sync push` and `orvanta generate-metadata` modify workspace state or local files; only run these when the user explicitly asks, otherwise tell them which to run.
 
@@ -487,54 +487,6 @@ def write_s3_file(s3object: S3Object | str | None, file_content: BufferedReader 
 # '''
 def delete_s3_object(s3object: S3Object | str, s3_resource_path: str | None = None) -> None
 
-# Sign S3 objects for use by anonymous users in public apps.
-# 
-# Args:
-#     s3_objects: List of S3 objects to sign
-# 
-# Returns:
-#     List of signed S3 objects
-def sign_s3_objects(s3_objects: list[S3Object | str]) -> list[S3Object]
-
-# Sign a single S3 object for use by anonymous users in public apps.
-# 
-# Args:
-#     s3_object: S3 object to sign
-# 
-# Returns:
-#     Signed S3 object
-def sign_s3_object(s3_object: S3Object | str) -> S3Object
-
-# Generate presigned public URLs for an array of S3 objects.
-# If an S3 object is not signed yet, it will be signed first.
-# 
-# Args:
-#     s3_objects: List of S3 objects to sign
-#     base_url: Optional base URL for the presigned URLs (defaults to OV_BASE_URL)
-# 
-# Returns:
-#     List of signed public URLs
-# 
-# Example:
-#     >>> s3_objs = [S3Object(s3="/path/to/file1.txt"), S3Object(s3="/path/to/file2.txt")]
-#     >>> urls = client.get_presigned_s3_public_urls(s3_objs)
-def get_presigned_s3_public_urls(s3_objects: list[S3Object | str], base_url: str | None = None) -> list[str]
-
-# Generate a presigned public URL for an S3 object.
-# If the S3 object is not signed yet, it will be signed first.
-# 
-# Args:
-#     s3_object: S3 object to sign
-#     base_url: Optional base URL for the presigned URL (defaults to OV_BASE_URL)
-# 
-# Returns:
-#     Signed public URL
-# 
-# Example:
-#     >>> s3_obj = S3Object(s3="/path/to/file.txt")
-#     >>> url = client.get_presigned_s3_public_url(s3_obj)
-def get_presigned_s3_public_url(s3_object: S3Object | str, base_url: str | None = None) -> str
-
 # Get the current user information.
 # 
 # Returns:
@@ -622,8 +574,6 @@ def get_resume_urls(approver: str = None, flow_level: bool = None) -> dict
 def request_interactive_slack_approval(slack_resource_path: str, channel_id: str, message: str = None, approver: str = None, default_args_json: dict = None, dynamic_enums_json: dict = None) -> None
 
 # Get email from workspace username
-# This method is particularly useful for apps that require the email address of the viewer.
-# Indeed, in the viewer context OV_USERNAME is set to the username of the viewer but OV_EMAIL is set to the email of the creator of the app.
 def username_to_email(username: str) -> str
 
 # Get a DataTable client for SQL queries.

@@ -30,7 +30,7 @@ Only use `sync push` when:
 
 If the user hasn't already told you to run/test/preview the script, offer it as a one-sentence next step (e.g. "Want me to run `orvanta script preview` with sample args?"). Do not present a multi-option menu.
 
-If the user already asked to test/run/try the script in their original request, skip the offer and just execute `orvanta script preview <path> -d '<args>'` directly. Pick plausible args from the script's declared parameters. The shape varies by language: `main(...)` for code languages, the SQL dialect's own placeholder syntax (`$1` for PostgreSQL, `?` for MySQL/Snowflake, `@P1` for MSSQL, `@name` for BigQuery, etc.), positional `$1`, `$2`, … for Bash, `param(...)` for PowerShell.
+If the user already asked to test/run/try the script in their original request, skip the offer and just execute `orvanta script preview <path> -d '<args>'` directly. Pick plausible args from the script's declared parameters. The shape varies by language: `main(...)` for code languages, the SQL dialect's own placeholder syntax (`$1` for PostgreSQL, `?` for MySQL, `@name` for BigQuery, etc.), positional `$1`, `$2`, … for Bash.
 
 `orvanta script preview` does not deploy, but it still executes script code and may cause side effects; run it yourself when the user asked to test/preview (or after confirming that execution is intended). `orvanta sync push` and `orvanta generate-metadata` modify workspace state or local files; only run these when the user explicitly asks, otherwise tell them which to run.
 
