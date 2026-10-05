@@ -560,6 +560,7 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--plain-secrets` - Push secrets as plain text
   - `--encrypted-secrets` - Compare against the workspace ciphertext of secret variables (for a checkout pulled with --encrypted-secrets)
   - `--clear-empty-secrets` - Push a secret variable whose local value is empty as an empty secret, and clear a secret settings field (Slack OAuth client secret) whose value is empty. Without it an empty value is a placeholder and never overwrites the secret
+  - `--allow-unresolved-credential-placeholders` - Push a resource that holds a stripped-credential placeholder ($var:<resource path>_<field>) when the workspace has no stored value and no such variable exists. Refused by default: a renamed resource or a shifted array element would lose its credential (#1931)
   - `--skip-variables` - Skip syncing variables (including secrets)
   - `--skip-secrets` - Skip syncing only secrets variables
   - `--include-secrets` - Include secrets in sync (overrides skipSecrets in orvanta.yaml)
