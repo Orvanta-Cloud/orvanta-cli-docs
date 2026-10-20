@@ -607,6 +607,13 @@ parseS3Object(s3Object: S3Object): S3ObjectRecord
 
 setWorkflowCtx(ctx: WorkflowCtx | null): void
 
+/**
+ * The shape the backend writes for a decided approval (`wac_executor.rs`).
+ */
+isApprovalResult(v: any): boolean
+
+escapeReservedStepName(name: string): string
+
 async sleep(seconds: number): Promise<void>
 
 async step<T>(name: string, fn: () => T | Promise<T>): Promise<T>
