@@ -90,6 +90,10 @@ properties:
   is_flow:
     type: boolean
     description: True if script_path points to a flow, false if it points to a script
+  is_bpmn:
+    type: boolean
+    description: The path names a deployed BPMN flow instead of a script or DAG flow.
+      Mutually exclusive with is_flow.
   labels:
     type: array
     items:
@@ -230,6 +234,10 @@ properties:
   is_flow:
     type: boolean
     description: True if script_path points to a flow, false if it points to a script
+  is_bpmn:
+    type: boolean
+    description: The path names a deployed BPMN flow instead of a script or DAG flow.
+      Mutually exclusive with is_flow.
   labels:
     type: array
     items:
@@ -353,6 +361,10 @@ properties:
   is_flow:
     type: boolean
     description: True if script_path points to a flow, false if it points to a script
+  is_bpmn:
+    type: boolean
+    description: The path names a deployed BPMN flow instead of a script or DAG flow.
+      Mutually exclusive with is_flow.
   labels:
     type: array
     items:
@@ -462,6 +474,10 @@ properties:
   is_flow:
     type: boolean
     description: True if script_path points to a flow, false if it points to a script
+  is_bpmn:
+    type: boolean
+    description: The path names a deployed BPMN flow instead of a script or DAG flow.
+      Mutually exclusive with is_flow.
   labels:
     type: array
     items:
@@ -549,6 +565,10 @@ properties:
   is_flow:
     type: boolean
     description: True if script_path points to a flow, false if it points to a script
+  is_bpmn:
+    type: boolean
+    description: The path names a deployed BPMN flow instead of a script or DAG flow.
+      Mutually exclusive with is_flow.
   labels:
     type: array
     items:
@@ -629,6 +649,10 @@ properties:
   is_flow:
     type: boolean
     description: True if script_path points to a flow, false if it points to a script
+  is_bpmn:
+    type: boolean
+    description: The path names a deployed BPMN flow instead of a script or DAG flow.
+      Mutually exclusive with is_flow.
   labels:
     type: array
     items:
@@ -729,6 +753,10 @@ properties:
   is_flow:
     type: boolean
     description: True if script_path points to a flow, false if it points to a script
+  is_bpmn:
+    type: boolean
+    description: The path names a deployed BPMN flow instead of a script or DAG flow.
+      Mutually exclusive with is_flow.
   labels:
     type: array
     items:
@@ -815,6 +843,10 @@ properties:
   is_flow:
     type: boolean
     description: True if script_path points to a flow, false if it points to a script
+  is_bpmn:
+    type: boolean
+    description: The path names a deployed BPMN flow instead of a script or DAG flow.
+      Mutually exclusive with is_flow.
   labels:
     type: array
     items:
@@ -922,6 +954,10 @@ properties:
   is_flow:
     type: boolean
     description: True if script_path points to a flow, false if it points to a script
+  is_bpmn:
+    type: boolean
+    description: The path names a deployed BPMN flow instead of a script or DAG flow.
+      Mutually exclusive with is_flow.
   labels:
     type: array
     items:
@@ -1013,6 +1049,10 @@ properties:
   is_flow:
     type: boolean
     description: True if script_path points to a flow, false if it points to a script
+  is_bpmn:
+    type: boolean
+    description: The path names a deployed BPMN flow instead of a script or DAG flow.
+      Mutually exclusive with is_flow.
   labels:
     type: array
     items:
