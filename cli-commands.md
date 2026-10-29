@@ -622,11 +622,14 @@ trigger related commands
 
 - `trigger list` - list all triggers
   - `--json` - Output as JSON (for piping to jq)
+  - `--target <target:string>` - Only triggers that start a script, flow (DAG flow) or bpmn (BPMN flow)
 - `trigger get <path:string>` - get a trigger's details
   - `--json` - Output as JSON (for piping to jq)
   - `--kind <kind:string>` - Trigger kind (http, websocket, kafka, nats, postgres, mqtt, sqs, gcp, azure, email). Recommended for faster lookup
 - `trigger new <path:string>` - create a new trigger locally
   - `--kind <kind:string>` - Trigger kind (required: http, websocket, kafka, nats, postgres, mqtt, sqs, gcp, azure, email)
+  - `--target <target:string>` - What the trigger starts: script (default), flow (DAG flow) or bpmn (BPMN flow)
+  - `--target-path <path:string>` - Path of the script, flow or BPMN flow the trigger starts (script_path)
 - `trigger push <file_path:string> <remote_path:string>` - push a local trigger spec. This overrides any remote versions.
 - `trigger set-permissioned-as <path:string> <email:string>` - Set the email (run-as user) for a trigger (requires admin or wm_deployers group)
   - `--kind <kind:string>` - Trigger kind (required: http, websocket, kafka, nats, postgres, mqtt, sqs, gcp, azure, email)
