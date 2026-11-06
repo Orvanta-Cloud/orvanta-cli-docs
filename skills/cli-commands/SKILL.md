@@ -105,12 +105,14 @@ BPMN flow related commands
 **Options:**
 - `--show-archived` - Show archived BPMN flows instead of active ones
 - `--json` - Output as JSON (for piping to jq)
+- `--label <label:string>` - Only flows carrying this label (comma-separated: must carry all of them)
 
 **Subcommands:**
 
 - `bpmn list` - list all BPMN flows
   - `--show-archived` - Show archived BPMN flows instead of active ones
   - `--json` - Output as JSON (for piping to jq)
+  - `--label <label:string>` - Only flows carrying this label (comma-separated: must carry all of them)
 - `bpmn get <path:string>` - get a BPMN flow's details
   - `--json` - Output as JSON (for piping to jq)
   - `--xml` - Output only the raw BPMN 2.0 XML
@@ -137,6 +139,14 @@ BPMN flow related commands
 - `bpmn migrate-bulk <from_version:string> <target_version:string>` - migrate every running instance pinned to a definition version
   - `--dry-run` - Validate and report eligibility; write nothing
   - `--json` - Output as JSON (for piping to jq)
+- `bpmn run <path:string>` - start a BPMN process instance by path and print its instance id. Processes are long-running: use --wait to follow it.
+  - `-d --data <data:string>` - Start variables (flow_input) as a JSON object string, a file using @<filename>, or stdin using @-.
+  - `--business-key <key:string>` - Business key linking the instance to a case (ignored by the server unless case management is available)
+  - `--process-id <id:string>` - Which <process> of the document to start (default: the flow's main process)
+  - `--wait` - Poll until the instance completes, fails, is canceled or waits on a user task. Progress goes to stderr; stdout is the final variables (or the id when parked).
+  - `--timeout <seconds:number>` - With --wait, give up after this many seconds (default 300)
+  - `--json` - Output as JSON (for piping to jq)
+  - `-s --silent` - Suppress progress messages. Exit code 0 covers both completed and parked, so scripts that need to tell them apart should use --json (its `state` field).
 - `bpmn delegates` - BPMN delegate binding commands -- the export/import checklist for unbound Flowable delegates (flowable:class / delegateExpression / expression). Run "export" first.
 - `bpmn delegates list` - list existing BPMN delegate bindings in this workspace
   - `--json` - Output as JSON (for piping to jq)

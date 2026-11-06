@@ -163,6 +163,15 @@ properties:
     type: boolean
     description: If true, passes the request body as a raw string instead of parsing
       as JSON
+  idempotency_key_enabled:
+    type: boolean
+    description: 'Honour an `Idempotency-Key` request header (#2291): a repeat of
+      a request with the same key, from the same caller, within 24 hours starts no
+      second run and answers with the first run''s id (`Idempotency-Replayed: true`);
+      the same key with other arguments is a 422. Only for an async route whose caller
+      the platform can identify (''orvanta'', ''api_key'', ''basic_http'' or ''signature''
+      authentication); refused with 400 otherwise. Default false; omitted on edit,
+      the stored value is kept.'
   error_handler_path:
     type: string
     description: Path to a script or flow to run when the triggered job fails
