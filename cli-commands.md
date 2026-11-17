@@ -563,7 +563,7 @@ sync local with a remote workspaces or the opposite (push or pull)
   - `--repository <repo:string>` - Specify repository path (e.g., u/user/repo) when multiple repositories exist
   - `--promotion <branch:string>` - Use promotionOverrides from the specified branch instead of regular overrides
   - `--branch, --env <branch:string>` - [Deprecated: use --workspace] Override the current git branch/environment
-- `sync push` - Push any local changes and apply them remotely.
+- `sync push` - Push any local changes and apply them remotely. After the push, each pushed flow is read back and the push exits non-zero if a static input value was lost or changed (values are redacted; --debug prints them). Before reading back it waits for the dependency job of each flow, at most ORVANTA_PUSH_VERIFY_WAIT_MS milliseconds in total (default 30000, 0 = do not wait; a change that job makes after the wait is not covered).
   - `--yes` - Push without needing confirmation
   - `--allow-unrecognized-deletes` - Allow deleting remote objects whose local file exists under another spelling (a script under another language's extension, a pre-6.0.0 .json metadata file). Off by default (orvanta-platform#1498).
   - `--dry-run` - Show changes that would be pushed without actually pushing

@@ -5,6 +5,9 @@
   "branch": "main",
   "url": "https://context7.com/orvanta-cloud/orvanta-cli-docs",
   "previousVersions": [
+    "v7.2.0",
+    "v7.1.0",
+    "v7.0.0",
     "v6.7.0",
     "v6.6.0",
     "v6.5.0",
